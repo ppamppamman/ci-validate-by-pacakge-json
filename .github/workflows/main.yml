@@ -7,6 +7,8 @@ on:
   # Triggers the workflow on push or pull request events but only for the "main" branch
   push:
     branches: ["main"]
+    tags:
+      - "v*"
   pull_request:
     branches: ["main"]
 
@@ -29,7 +31,7 @@ jobs:
       - name: Package Version Check Action
         uses: technote-space/package-version-check-action@v1.5.2
         with:
-          COMMIT_DISABLED: 1
+          BRANCH_PREFIX: main/
 
       # Runs a single command using the runners shell
       - name: checkup
