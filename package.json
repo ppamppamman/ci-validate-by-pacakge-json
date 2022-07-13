@@ -1,6 +1,6 @@
 {
   "name": "ci-validate-by-pacakge-json",
-  "version": "0.1.4",
+  "version": "0.0.0",
   "private": true,
   "dependencies": {
     "@testing-library/jest-dom": "^5.16.4",
