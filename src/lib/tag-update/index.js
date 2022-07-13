@@ -9,8 +9,8 @@ const execute = async () => {
   try {
     dotenv.config();
 
-    // const token = core.getInput("github-token");
-    const token = process.env.GITHUB_TOKEN;
+    const token = core.getInput("github-token");
+    // const token = process.env.GITHUB_TOKEN;
     const octokit = github.getOctokit(token);
 
     // NOTE : https://docs.github.com/en/rest/users/users
