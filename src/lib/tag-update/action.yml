@@ -1,9 +1,5 @@
 name: "tag-update"
 description: "tag-update test action"
-inputs:
-  # github-token:
-  #   description: "github token"
-  #   required: true
 runs:
   using: "node16"
   main: "index.js"

@@ -1,9 +1,5 @@
 name: "package-version-update"
 description: "package-version-update test action"
-inputs:
-  # github-token:
-  #   description: "github token"
-  #   required: true
 runs:
   using: "node16"
   main: "index.js"
