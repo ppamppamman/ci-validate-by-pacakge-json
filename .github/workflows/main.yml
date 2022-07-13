@@ -19,8 +19,8 @@ jobs:
   build:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
-    if: github.actor == 'ppamppamman'
-    # permissions: write-all
+    # https://docs.github.com/en/actions/using-workflows/triggering-a-workflow#triggering-a-workflow-from-a-workflow
+    permissions: read-all|write-all
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
@@ -40,12 +40,12 @@ jobs:
       - name: Package.json version update Automatically
         uses: ./src/lib/package-version-update/
         with:
-          github-token: ${{ secrets.PERSONAL_TOKEN }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Tag update
         uses: ./src/lib/tag-update/
         with:
-          github-token: ${{ secrets.PERSONAL_TOKEN }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
 
       # Runs a set of commands using the runners shell
       - name: Run a multi-line script
