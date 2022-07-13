@@ -7,8 +7,6 @@ on:
   # Triggers the workflow on push or pull request events but only for the "main" branch
   push:
     branches: ["main"]
-    tags:
-      - "v*"
   pull_request:
     branches: ["main"]
 
@@ -40,12 +38,12 @@ jobs:
       - name: Package.json version update Automatically
         uses: ./src/lib/package-version-update/
         with:
-          github-token: ${{ secrets.PERSONAL_TOKEN }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Tag update
         uses: ./src/lib/tag-update/
         with:
-          github-token: ${{ secrets.PERSONAL_TOKEN }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
 
       # Runs a set of commands using the runners shell
       - name: Run a multi-line script
