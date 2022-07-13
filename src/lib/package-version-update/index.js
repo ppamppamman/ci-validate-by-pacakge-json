@@ -101,8 +101,8 @@ const execute = async () => {
         ...INITIAL_PARAMETER,
         message: `fix: update version from ${prevAppVersion} to ${updatedAppPatchVersion}`,
         author: {
-          name: user.data.name,
-          email: user.data.email,
+          name: "update-bot",
+          email: "update-bot@lemonbase.com",
         },
         parents: [commit.data.sha],
         tree: createTree.data.sha,
