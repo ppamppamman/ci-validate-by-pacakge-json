@@ -122,6 +122,7 @@ const execute = async () => {
     console.log("updateRef", updateRef);
   } catch (err) {
     // setFailed logs the message and sets a failing exit code
+    console.log(err);
     core.setFailed(`Action failed with error ${err}`);
   }
 };
