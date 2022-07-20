@@ -18,7 +18,7 @@ const execute = async () => {
       .filter(v => v !== "");
 
     // NOTE : https://docs.github.com/en/rest/users/users
-    const user = await octokit.request("GET /user/ppamppamman", {});
+    const user = await octokit.request("GET /users/ppamppamman", {});
 
     // NOTE : constants
     const OWNER = user.data.login;
