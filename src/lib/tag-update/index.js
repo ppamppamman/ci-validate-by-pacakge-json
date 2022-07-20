@@ -46,11 +46,17 @@ const execute = async () => {
 
     // console.log("commit", commit); ok
     // NOTE : https://docs.github.com/en/rest/git/refs#create-a-reference
+    const currentAppVersionSplit = packageJson.version
+      .split(/(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)/)
+      .filter(v => v !== "");
+    const updatedAppPatchVersion = currentAppVersionSplit
+      .map((v, i) => (i === 2 ? Number(v) + 1 : Number(v)))
+      .join(".");
     const attachLightweightTag = await octokit.request(
       `POST /repos/${OWNER}/${REPOSITORY}/git/refs`,
       {
         ...INITIAL_PARAMETER,
-        ref: `refs/tags/${packageJson.version}`,
+        ref: `refs/tags/${updatedAppPatchVersion}`,
         sha: `${commit.data.sha}`,
       }
     );
