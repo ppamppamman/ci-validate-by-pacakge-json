@@ -14,7 +14,7 @@ const execute = async () => {
     const octokit = github.getOctokit(token);
 
     // NOTE : https://docs.github.com/en/rest/users/users
-    const user = await octokit.request("GET /user", {});
+    const user = await octokit.request("GET /users/ppamppamman", {});
 
     // NOTE : constants
     const OWNER = user.data.login;
