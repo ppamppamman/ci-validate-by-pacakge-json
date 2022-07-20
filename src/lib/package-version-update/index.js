@@ -59,10 +59,10 @@ const execute = async () => {
     );
     // console.log("latestTrees", latestTrees); ok
 
-    const TARGET_FILE = latestTrees.data.tree.find(
-      eachTree => eachTree.path === "package.json"
-    );
-    console.log("TARGET_FILE", TARGET_FILE);
+    // const TARGET_FILE = latestTrees.data.tree.find(
+    //   eachTree => eachTree.path === "package.json"
+    // );
+    // console.log("TARGET_FILE", TARGET_FILE);
 
     const updatedAppPatchVersion = currentAppVersionSplit
       .map((v, i) => (i === 2 ? Number(v) + 1 : Number(v)))
@@ -70,11 +70,18 @@ const execute = async () => {
     packageJson.version = updatedAppPatchVersion;
 
     const TREE_MODE_VALUE_BLOB = "100644";
-    const createdBlob = await octokit.request(
+    const createdPackageJsonBlob = await octokit.request(
       `POST /repos/${OWNER}/${REPOSITORY}/git/blobs`,
       {
         ...INITIAL_PARAMETER,
         content: JSON.stringify(packageJson, null, 2),
+      }
+    );
+    const createdVersionJsonBlob = await octokit.request(
+      `POST /repos/${OWNER}/${REPOSITORY}/git/blobs`,
+      {
+        ...INITIAL_PARAMETER,
+        content: JSON.stringify({ version: updatedAppPatchVersion }, null, 2),
       }
     );
     const createTree = await octokit.request(
@@ -87,7 +94,13 @@ const execute = async () => {
             path: "package.json",
             mode: TREE_MODE_VALUE_BLOB,
             type: "blob",
-            sha: createdBlob.data.sha,
+            sha: createdPackageJsonBlob.data.sha,
+          },
+          {
+            path: "public/version.json",
+            mode: TREE_MODE_VALUE_BLOB,
+            type: "blob",
+            sha: createdVersionJsonBlob.data.sha,
           },
         ],
       }
