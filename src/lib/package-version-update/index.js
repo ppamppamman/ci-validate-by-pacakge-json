@@ -10,7 +10,6 @@ const execute = async () => {
     dotenv.config();
 
     const token = core.getInput("github-token");
-    // const token = process.env.GITHUB_TOKEN;
     const octokit = github.getOctokit(token);
     const prevAppVersion = packageJson.version;
     const currentAppVersionSplit = packageJson.version
