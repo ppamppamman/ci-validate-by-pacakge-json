@@ -4,23 +4,21 @@ const dotenv = require("dotenv");
 
 const BASE_DIRECTORY = process.cwd();
 const packageJson = require(`${BASE_DIRECTORY}/package.json`);
+const REPOSITORY = "ci-validate-by-pacakge-json";
+const TARGET_BRANCH = "main";
+const REFERENCE_HEADS_OF_TARGET_BRANCH = `heads/${TARGET_BRANCH}`;
 
 const execute = async () => {
   try {
     dotenv.config();
 
     const token = core.getInput("github-token");
-    // const token = process.env.GITHUB_TOKEN;
     const octokit = github.getOctokit(token);
 
     // NOTE : https://docs.github.com/en/rest/users/users
     const user = await octokit.request("GET /users/ppamppamman", {});
-
-    // NOTE : constants
     const OWNER = user.data.login;
-    const REPOSITORY = "ci-validate-by-pacakge-json";
-    const TARGET_BRANCH = "main";
-    const REFERENCE_HEADS_OF_TARGET_BRANCH = `heads/${TARGET_BRANCH}`;
+
     const INITIAL_PARAMETER = {
       owner: OWNER,
       repo: REPOSITORY,
@@ -44,7 +42,6 @@ const execute = async () => {
       }
     );
 
-    // console.log("commit", commit); ok
     // NOTE : https://docs.github.com/en/rest/git/refs#create-a-reference
     const currentAppVersionSplit = packageJson.version
       .split(/(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)/)
@@ -52,6 +49,7 @@ const execute = async () => {
     const updatedAppPatchVersion = currentAppVersionSplit
       .map((v, i) => (i === 2 ? Number(v) + 1 : Number(v)))
       .join(".");
+
     const attachLightweightTag = await octokit.request(
       `POST /repos/${OWNER}/${REPOSITORY}/git/refs`,
       {
@@ -61,8 +59,10 @@ const execute = async () => {
       }
     );
 
-    console.log("attachLightweightTag", attachLightweightTag);
+    console.log("attachLightweightTag result", attachLightweightTag);
   } catch (err) {
+    console.log(err);
+
     // setFailed logs the message and sets a failing exit code
     core.setFailed(`Action failed with error ${err}`);
   }

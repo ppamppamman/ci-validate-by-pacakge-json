@@ -2,8 +2,8 @@ import { useRef } from "react";
 
 function App() {
   const throttleGetFunc = useRef();
-  const versionInfo = useRef("0.0.3");
-  const END_POINT = "http://localhost:3000/version.json";
+  const versionInfo = useRef("0.0.4");
+  const END_POINT = "http://127.0.0.1:8080/version.json";
   const fetchVersion = async () => {
     const response = await fetch(END_POINT);
     const result = await response.json();
